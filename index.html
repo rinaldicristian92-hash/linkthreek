@@ -4,9 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>rinaldi.visuals</title>
+
+  <!-- Open Graph — anteprima quando condiviso -->
+  <meta property="og:title" content="rinaldi.visuals" />
+  <meta property="og:description" content="Foggia, Italy — Graphic design & photography" />
+  <meta property="og:image" content="https://ugc.production.linktr.ee/c177c842-ce51-4c22-a3f2-e857f031412b_Tavola-disegno-1-100.jpeg?io=true&size=avatar-v3_0" />
+  <meta property="og:type" content="website" />
+  <meta name="description" content="Foggia, Italy — Graphic design & photography" />
+
+  <!-- Favicon emoji -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◼</text></svg>" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -19,7 +31,8 @@
       --text-primary: #0a0a0a;
       --text-secondary: #6b6b6b;
       --border: #e8e8e8;
-      --hover-bg: #f5f5f5;
+      --hover-bg: #f7f7f7;
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.07);
     }
 
     body {
@@ -31,7 +44,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 48px 24px;
+      padding: 56px 24px;
     }
 
     .card {
@@ -40,45 +53,58 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 32px;
+      gap: 36px;
     }
 
-    /* Profile */
+    /* ── Profile ── */
     .profile {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 14px;
       text-align: center;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 96px;
+      height: 96px;
     }
 
     .avatar {
-      width: 80px;
-      height: 80px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid var(--border);
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .avatar-wrap:hover .avatar {
+      transform: scale(1.04);
     }
 
     .profile-name {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 600;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
     }
 
     .profile-bio {
       font-size: 0.82rem;
       color: var(--text-secondary);
       font-weight: 300;
-      line-height: 1.5;
-      max-width: 280px;
+      line-height: 1.6;
+      max-width: 260px;
     }
 
-    /* Links */
+    /* ── Links ── */
     .links {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       width: 100%;
     }
 
@@ -86,37 +112,70 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 16px 20px;
+      padding: 15px 20px;
       border: 1.5px solid var(--border);
-      border-radius: 4px;
+      border-radius: 6px;
       text-decoration: none;
       color: var(--text-primary);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 500;
       letter-spacing: 0.01em;
-      transition: background 0.15s ease, border-color 0.15s ease;
-      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease,
+                  transform 0.18s ease, box-shadow 0.18s ease;
+      opacity: 0;
+      animation: fadeUp 0.4s ease both;
     }
 
     .link-btn:hover {
       background: var(--hover-bg);
-      border-color: #c0c0c0;
+      border-color: #c8c8c8;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
     }
 
     .link-btn svg {
       flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      opacity: 0.75;
+      width: 17px;
+      height: 17px;
+      opacity: 0.6;
     }
 
-    /* Footer */
-    .footer {
+    /* email: mostra l'indirizzo sotto come testo secondario */
+    .link-btn .label-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .link-btn .sub {
       font-size: 0.72rem;
-      color: #c0c0c0;
       font-weight: 300;
-      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+      letter-spacing: 0;
+    }
+
+    /* stagger animazioni */
+    .link-btn:nth-child(1) { animation-delay: 0.15s; }
+    .link-btn:nth-child(2) { animation-delay: 0.22s; }
+    .link-btn:nth-child(3) { animation-delay: 0.29s; }
+    .link-btn:nth-child(4) { animation-delay: 0.36s; }
+    .link-btn:nth-child(5) { animation-delay: 0.43s; }
+
+    /* ── Footer ── */
+    .footer {
+      font-size: 0.7rem;
+      color: #c8c8c8;
+      font-weight: 300;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
+      animation: fadeUp 0.4s 0.55s ease both;
+      opacity: 0;
+    }
+
+    /* ── Keyframes ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -124,11 +183,13 @@
   <div class="card">
 
     <div class="profile">
-      <img
-        class="avatar"
-        src="https://ugc.production.linktr.ee/c177c842-ce51-4c22-a3f2-e857f031412b_Tavola-disegno-1-100.jpeg?io=true&size=avatar-v3_0"
-        alt="rinaldi.visuals"
-      />
+      <div class="avatar-wrap">
+        <img
+          class="avatar"
+          src="https://ugc.production.linktr.ee/c177c842-ce51-4c22-a3f2-e857f031412b_Tavola-disegno-1-100.jpeg?io=true&size=avatar-v3_0"
+          alt="rinaldi.visuals"
+        />
+      </div>
       <p class="profile-name">rinaldi.visuals</p>
       <p class="profile-bio">Foggia, Italy &mdash; Graphic design &amp; photography</p>
     </div>
@@ -136,7 +197,6 @@
     <div class="links">
 
       <a class="link-btn" href="https://rinaldicristian92-hash.github.io/sito-portfolio-rinaldivisuals/" target="_blank" rel="noopener">
-        <!-- Globe icon -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/>
           <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
@@ -145,7 +205,6 @@
       </a>
 
       <a class="link-btn" href="https://www.instagram.com/rinaldi.visuals" target="_blank" rel="noopener">
-        <!-- Instagram icon -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
           <circle cx="12" cy="12" r="4"/>
@@ -155,7 +214,6 @@
       </a>
 
       <a class="link-btn" href="http://linkedin.com/in/cristian-rinaldi-514b553a0" target="_blank" rel="noopener">
-        <!-- LinkedIn icon -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
           <rect x="2" y="9" width="4" height="12"/>
@@ -165,7 +223,6 @@
       </a>
 
       <a class="link-btn" href="https://www.facebook.com/Cristian%20Rinaldi" target="_blank" rel="noopener">
-        <!-- Facebook icon -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
         </svg>
@@ -173,12 +230,14 @@
       </a>
 
       <a class="link-btn" href="mailto:rinaldicristian92@gmail.com">
-        <!-- Mail icon -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="4" width="20" height="16" rx="2"/>
           <path d="M2 7l10 7 10-7"/>
         </svg>
-        rinaldicristian92@gmail.com
+        <span class="label-wrap">
+          <span>Email</span>
+          <span class="sub">rinaldicristian92@gmail.com</span>
+        </span>
       </a>
 
     </div>
