@@ -35,6 +35,17 @@
       --shadow-hover: 0 4px 16px rgba(0,0,0,0.07);
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e0e0e;
+        --text-primary: #f0f0f0;
+        --text-secondary: #888888;
+        --border: #2a2a2a;
+        --hover-bg: #1a1a1a;
+        --shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
+      }
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
@@ -245,5 +256,7 @@
     <p class="footer">#madebycristianrinaldi</p>
 
   </div>
+  <!-- GoatCounter analytics — sostituisci YOUR_CODE con il tuo codice da goatcounter.com -->
+  <script data-goatcounter="https://YOUR_CODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
