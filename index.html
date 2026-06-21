@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>rinaldi.visuals</title>
 
-  <!-- Open Graph — anteprima quando condiviso -->
+  <!-- Open Graph -->
   <meta property="og:title" content="rinaldi.visuals" />
   <meta property="og:description" content="Foggia, Italy — Graphic design & photography" />
   <meta property="og:image" content="https://ugc.production.linktr.ee/c177c842-ce51-4c22-a3f2-e857f031412b_Tavola-disegno-1-100.jpeg?io=true&size=avatar-v3_0" />
   <meta property="og:type" content="website" />
   <meta name="description" content="Foggia, Italy — Graphic design & photography" />
 
-  <!-- Favicon emoji -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◼</text></svg>" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -26,24 +24,26 @@
       padding: 0;
     }
 
-    :root {
+    [data-theme="light"] {
       --bg: #ffffff;
       --text-primary: #0a0a0a;
       --text-secondary: #6b6b6b;
       --border: #e8e8e8;
       --hover-bg: #f7f7f7;
       --shadow-hover: 0 4px 16px rgba(0,0,0,0.07);
+      --toggle-bg: #f0f0f0;
+      --toggle-hover: #e4e4e4;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0e0e0e;
-        --text-primary: #f0f0f0;
-        --text-secondary: #888888;
-        --border: #2a2a2a;
-        --hover-bg: #1a1a1a;
-        --shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
-      }
+    [data-theme="dark"] {
+      --bg: #0e0e0e;
+      --text-primary: #f0f0f0;
+      --text-secondary: #888888;
+      --border: #2a2a2a;
+      --hover-bg: #1a1a1a;
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
+      --toggle-bg: #1e1e1e;
+      --toggle-hover: #2a2a2a;
     }
 
     body {
@@ -56,8 +56,43 @@
       align-items: center;
       justify-content: center;
       padding: 56px 24px;
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
+    /* ── Toggle ── */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--toggle-bg);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--toggle-hover);
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+
+    [data-theme="dark"] .icon-sun  { display: block; }
+    [data-theme="dark"] .icon-moon { display: none; }
+
+    /* ── Card ── */
     .card {
       width: 100%;
       max-width: 400px;
@@ -78,7 +113,6 @@
     }
 
     .avatar-wrap {
-      position: relative;
       width: 96px;
       height: 96px;
     }
@@ -151,7 +185,6 @@
       opacity: 0.6;
     }
 
-    /* email: mostra l'indirizzo sotto come testo secondario */
     .link-btn .label-wrap {
       display: flex;
       flex-direction: column;
@@ -165,7 +198,6 @@
       letter-spacing: 0;
     }
 
-    /* stagger animazioni */
     .link-btn:nth-child(1) { animation-delay: 0.15s; }
     .link-btn:nth-child(2) { animation-delay: 0.22s; }
     .link-btn:nth-child(3) { animation-delay: 0.29s; }
@@ -175,7 +207,7 @@
     /* ── Footer ── */
     .footer {
       font-size: 0.7rem;
-      color: #c8c8c8;
+      color: var(--text-secondary);
       font-weight: 300;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -183,14 +215,40 @@
       opacity: 0;
     }
 
-    /* ── Keyframes ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
   </style>
+
+  <script>
+    // Applica il tema salvato prima del render per evitare flash
+    const saved = localStorage.getItem('theme');
+    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', saved || preferred);
+  </script>
 </head>
 <body>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Cambia tema">
+    <!-- Sole (visibile in dark mode) -->
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/>
+      <line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <!-- Luna (visibile in light mode) -->
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
   <div class="card">
 
     <div class="profile">
@@ -256,7 +314,17 @@
     <p class="footer">#madebycristianrinaldi</p>
 
   </div>
-  <!-- GoatCounter analytics — sostituisci YOUR_CODE con il tuo codice da goatcounter.com -->
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
+
   <script data-goatcounter="https://rinaldivisuals.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
